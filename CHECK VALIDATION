@@ -1,0 +1,26 @@
+#include <stdio.h>
+#include <stdbool.h>
+
+bool isValidString(const char* str) {
+    // Iterate through each character of the string
+    for (int i = 0; str[i] != '\0'; i++) {
+        // Perform the necessary checks
+        if (!(str[i] >= 'a' && str[i] <= 'z') && !(str[i] >= 'A' && str[i] <= 'Z')) {
+            return false; // Invalid character found
+        }
+    }
+    
+    return true; // All characters are valid
+}
+
+int main() {
+    const char* str = "Hello World";
+    
+    if (isValidString(str)) {
+        printf("The string is valid.\n");
+    } else {
+        printf("The string is invalid.\n");
+    }
+    
+    return 0;
+}
