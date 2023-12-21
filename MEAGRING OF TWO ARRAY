@@ -1,0 +1,37 @@
+#include <stdio.h>
+
+int main() {
+  int m, n, i;
+
+  printf("Enter the number of elements in the 1st array: ");
+  scanf("%d", &n);
+  printf("Enter the number of elements in the 2nd array: ");
+  scanf("%d", &m);
+
+  int arr1[n], arr2[m], arr3[n + m];
+
+  printf("Enter the elements in the 1st array: ");
+  for (i = 0; i < n; i++) {
+    scanf("%d", &arr1[i]);
+  }
+
+  printf("Enter the elements in the 2nd array: ");
+  for (i = 0; i < m; i++) {
+    scanf("%d", &arr2[i]);
+  }
+
+  for (i = 0; i < n; i++) {
+    arr3[i] = arr1[i];
+  }
+
+  for (i = 0; i < m; i++) {
+    arr3[n + i] = arr2[i];
+  }
+
+  printf("Merged array: ");
+  for (i = 0; i < m + n; i++) {
+    printf("%d ", arr3[i]);
+  }
+
+  return 0;
+}
