@@ -1,23 +1,22 @@
 NAME:JOSEPH ASBORN DANIEL
 REG:192324009
 
-#include <iostream>
-using namespace std;
+#include <stdio.h>
 
- int MAX_SIZE = 100;
+#define MAX_SIZE 100
 
 int main() {
-    int matrix[MAX_SIZE ][MAX_SIZE ];
+    int matrix[MAX_SIZE][MAX_SIZE];
     int n; // Size of the square matrix
 
-    cout << "Enter the size of the square matrix: ";
-    cin >> n;
+    printf("Enter the size of the square matrix: ");
+    scanf("%d", &n);
 
     // Input elements of the matrix
-    cout << "Enter the elements of the matrix:" << endl;
+    printf("Enter the elements of the matrix:\n");
     for (int i = 0; i < n; ++i) {
         for (int j = 0; j < n; ++j) {
-            cin >> matrix[i][j];
+            scanf("%d", &matrix[i][j]);
         }
     }
 
@@ -26,15 +25,13 @@ int main() {
     int secondaryDiagonalSum = 0;
 
     for (int i = 0; i < n; ++i) {
-        
-        
         primaryDiagonalSum += matrix[i][i]; // Elements on the primary diagonal
         secondaryDiagonalSum += matrix[i][n - i - 1]; // Elements on the secondary diagonal
     }
 
     // Display the sum of diagonals
-    cout << "Sum of the primary diagonal: " << primaryDiagonalSum << endl;
-    cout << "Sum of the secondary diagonal: " << secondaryDiagonalSum << endl;
+    printf("Sum of the primary diagonal: %d\n", primaryDiagonalSum);
+    printf("Sum of the secondary diagonal: %d\n", secondaryDiagonalSum);
 
     return 0;
 }
