@@ -1,5 +1,6 @@
+NAME:JOSEPHASBORNDANIEL
+REGNO:192324009
 #include <stdio.h>
-
 int main() {
   int m, n, i;
 
