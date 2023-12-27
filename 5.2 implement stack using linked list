@@ -1,0 +1,65 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+// Structure to represent a node in the linked list
+struct Node {
+    int data;
+    struct Node* next;
+};
+
+// Global variable to store the top of the stack
+struct Node* top = NULL;
+
+// Function to push an element onto the stack
+void Push(int value) {
+    struct Node* newNode = (struct Node*)malloc(sizeof(struct Node));
+    newNode->data = value;
+    newNode->next = top;
+    top = newNode;
+}
+
+// Function to pop an element from the stack
+void Pop() {
+    if (top == NULL) {
+        printf("Stack is empty.\n");
+        return;
+    }
+    struct Node* temp = top;
+    top = top->next;
+    free(temp);
+}
+
+// Function to display the elements in the stack
+void Display() {
+    if (top == NULL) {
+        printf("Stack is empty.\n");
+        return;
+    }
+    struct Node* temp = top;
+    while (temp != NULL) {
+        printf("%d ", temp->data);
+        temp = temp->next;
+    }
+    printf("\n");
+}
+
+// Function to peek at the top element of the stack
+void Peek() {
+    if (top == NULL) {
+        printf("Stack is empty.\n");
+        return;
+    }
+    printf("Top element: %d\n", top->data);
+}
+
+int main() {
+    Push(10);
+    Push(20);
+    Push(30);
+    Display(); // Output: 30 20 10
+    Peek();    // Output: Top element: 30
+    Pop();
+    Display(); // Output: 20 10
+    Peek();    // Output: Top element: 20
+    return 0;
+}
