@@ -1,0 +1,94 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+// Node structure for a doubly linked list
+struct Node {
+    int data;
+    struct Node* prev;
+    struct Node* next;
+};
+
+// Function to create a new node
+struct Node* createNode(int data) {
+    struct Node* newNode = (struct Node*)malloc(sizeof(struct Node));
+    newNode->data = data;
+    newNode->prev = NULL;
+    newNode->next = NULL;
+    return newNode;
+}
+
+// Function to insert a node at the beginning of the DLL
+struct Node* insertAtBeginning(struct Node* head, int data) {
+    struct Node* newNode = createNode(data);
+    if (head == NULL) {
+        return newNode;
+    }
+    newNode->next = head;
+    head->prev = newNode;
+    return newNode;
+}
+
+// Function to insert a node at the end of the DLL
+struct Node* insertAtEnd(struct Node* head, int data) {
+    struct Node* newNode = createNode(data);
+    if (head == NULL) {
+        return newNode;
+    }
+    struct Node* current = head;
+    while (current->next != NULL) {
+        current = current->next;
+    }
+    current->next = newNode;
+    newNode->prev = current;
+    return head;
+}
+
+// Function to insert a node at the middle of the DLL
+struct Node* insertAtMiddle(struct Node* head, int data, int position) {
+    struct Node* newNode = createNode(data);
+    if (head == NULL) {
+        return newNode;
+    }
+    struct Node* current = head;
+    int count = 1;
+    while (count < position && current->next != NULL) {
+        current = current->next;
+        count++;
+    }
+    newNode->next = current->next;
+    newNode->prev = current;
+    if (current->next != NULL) {
+        current->next->prev = newNode;
+    }
+    current->next = newNode;
+    return head;
+}
+
+// Function to delete a node from the beginning of the DLL
+struct Node* deleteFromBeginning(struct Node* head) {
+    if (head == NULL) {
+        printf("List is empty.\n");
+        return NULL;
+    }
+    struct Node* newHead = head->next;
+    if (newHead != NULL) {
+        newHead->prev = NULL;
+    }
+    free(head);
+    return newHead;
+}
+
+// Function to delete a node from the end of the DLL
+struct Node* deleteFromEnd(struct Node* head) {
+    if (head == NULL) {
+        printf("List is empty.\n");
+        return NULL;
+    }
+    struct Node* current = head;
+    while (current->next != NULL) {
+        current = current->next;
+    }
+    if (current->prev != NULL) {
+        current->prev->next = NULL;
+    } else {
+        // Only one node in the
