@@ -1,0 +1,95 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <ctype.h>
+
+#define MAX_STACK_SIZE 100
+
+// Structure to represent a stack
+typedef struct {
+    int data[MAX_STACK_SIZE];
+    int top;
+} Stack;
+
+// Function to initialize an empty stack
+void initializeStack(Stack *stack) {
+    stack->top = -1;
+}
+
+// Function to check if the stack is empty
+int isEmpty(Stack *stack) {
+    return stack->top == -1;
+}
+
+// Function to push an element onto the stack
+void push(Stack *stack, int value) {
+    if (stack->top < MAX_STACK_SIZE - 1) {
+        stack->data[++stack->top] = value;
+    } else {
+        printf("Error: Stack overflow\n");
+        exit(EXIT_FAILURE);
+    }
+}
+
+// Function to pop an element from the stack
+int pop(Stack *stack) {
+    if (!isEmpty(stack)) {
+        return stack->data[stack->top--];
+    } else {
+        printf("Error: Stack underflow\n");
+        exit(EXIT_FAILURE);
+    }
+}
+
+// Function to evaluate a postfix expression
+int evaluatePostfix(char *expression) {
+    Stack stack;
+    initializeStack(&stack);
+
+    for (int i = 0; i < strlen(expression); i++) {
+        char token = expression[i];
+
+        if (isdigit(token)) {
+            push(&stack, token - '0');
+        } else if (token == ' ') {
+            continue;  // Ignore spaces
+        } else {
+            // Token is an operator
+            int operand2 = pop(&stack);
+            int operand1 = pop(&stack);
+
+            switch (token) {
+                case '+':
+                    push(&stack, operand1 + operand2);
+                    break;
+                case '-':
+                    push(&stack, operand1 - operand2);
+                    break;
+                case '*':
+                    push(&stack, operand1 * operand2);
+                    break;
+                case '/':
+                    push(&stack, operand1 / operand2);
+                    break;
+                default:
+                    printf("Error: Invalid token in the expression\n");
+                    exit(EXIT_FAILURE);
+            }
+        }
+    }
+
+    if (!isEmpty(&stack)) {
+        return pop(&stack);
+    } else {
+        printf("Error: Invalid postfix expression\n");
+        exit(EXIT_FAILURE);
+    }
+}
+
+int main() {
+    char postfix_expression[] = "44 2 / 6 -";
+    int result = evaluatePostfix(postfix_expression);
+    printf("Result: %d\n", result);
+
+    return 0;
+}
