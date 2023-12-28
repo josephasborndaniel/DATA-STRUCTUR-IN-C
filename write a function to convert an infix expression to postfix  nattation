@@ -1,0 +1,103 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <ctype.h>
+
+#define MAX_STACK_SIZE 100
+
+// Structure to represent a stack
+typedef struct {
+    char data[MAX_STACK_SIZE];
+    int top;
+} CharStack;
+
+// Function to initialize an empty stack
+void initializeCharStack(CharStack *stack) {
+    stack->top = -1;
+}
+
+// Function to check if the stack is empty
+int isCharStackEmpty(CharStack *stack) {
+    return stack->top == -1;
+}
+
+// Function to push a character onto the stack
+void pushChar(CharStack *stack, char value) {
+    if (stack->top < MAX_STACK_SIZE - 1) {
+        stack->data[++stack->top] = value;
+    } else {
+        printf("Error: Stack overflow\n");
+        exit(EXIT_FAILURE);
+    }
+}
+
+// Function to pop a character from the stack
+char popChar(CharStack *stack) {
+    if (!isCharStackEmpty(stack)) {
+        return stack->data[stack->top--];
+    } else {
+        printf("Error: Stack underflow\n");
+        exit(EXIT_FAILURE);
+    }
+}
+
+// Function to get the precedence of an operator
+int getPrecedence(char operator) {
+    switch (operator) {
+        case '+':
+        case '-':
+            return 1;
+        case '*':
+        case '/':
+            return 2;
+        default:
+            return 0;
+    }
+}
+
+// Function to convert infix expression to postfix notation
+void infixToPostfix(char *infixExpression, char *postfixExpression) {
+    CharStack operatorStack;
+    initializeCharStack(&operatorStack);
+
+    int j = 0; // Index for the resulting postfix expression
+
+    for (int i = 0; i < strlen(infixExpression); i++) {
+        char token = infixExpression[i];
+
+        if (isalnum(token)) {
+            // If the token is an operand, add it to the postfix expression
+            postfixExpression[j++] = token;
+        } else if (token == '(') {
+            // If the token is an opening parenthesis, push it onto the stack
+            pushChar(&operatorStack, token);
+        } else if (token == ')') {
+            // If the token is a closing parenthesis, pop operators from the stack
+            // and add them to the postfix expression until an opening parenthesis is encountered
+            while (!isCharStackEmpty(&operatorStack) && operatorStack.data[operatorStack.top] != '(') {
+                postfixExpression[j++] = popChar(&operatorStack);
+            }
+            // Pop the opening parenthesis from the stack
+            popChar(&operatorStack);
+        } else {
+            // If the token is an operator, pop operators from the stack and add them to the postfix expression
+            // until the stack is empty or the top operator has lower precedence than the current token
+            while (!isCharStackEmpty(&operatorStack) && getPrecedence(operatorStack.data[operatorStack.top]) >= getPrecedence(token)) {
+                postfixExpression[j++] = popChar(&operatorStack);
+            }
+            // Push the current token onto the stack
+            pushChar(&operatorStack, token);
+        }
+    }
+
+    // Pop any remaining operators from the stack and add them to the postfix expression
+    while (!isCharStackEmpty(&operatorStack)) {
+        postfixExpression[j++] = popChar(&operatorStack);
+    }
+
+    // Null-terminate the resulting postfix expression
+    postfixExpression[j] = '\0';
+}
+
+int main() {
+    char infixExpression[]
