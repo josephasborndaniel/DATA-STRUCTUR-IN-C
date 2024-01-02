@@ -58,7 +58,7 @@ void check(char *string) {
 }
 
 int main() {
-    printf("Name: Philip Gracian Sanova\nReg No: 192324023\n");
+   
     char string[] = "{[]";
     check(string);
     return 0;
