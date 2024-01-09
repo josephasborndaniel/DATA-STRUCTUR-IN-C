@@ -183,7 +183,7 @@ Implement a C Program for Splay tree tree and perform Insertion and Deletion of 
 Day 11
 
 
-Implement a C Program for B Tree and perform Insertion of Nodes
+11.1Implement a C Program for B Tree and perform Insertion of Nodes
 
 
-Implement a C Program for TRIE Tree and perform Insertion  of Nodes
+11.2Implement a C Program for TRIE Tree and perform Insertion  of Nodes
